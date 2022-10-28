@@ -25,22 +25,37 @@ fun NoteInputText(
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
 
+//    TextField(
+//        value = TextFieldValue(text = text),
+//        onValueChange = onTextChange,
+//        colors = TextFieldDefaults.textFieldColors(
+//            backgroundColor = Color.Transparent
+//        ),
+//        maxLines = maxLine,
+//        label = NoteInputLabel(label),
+//        keyboardOptions = KeyboardOptions.Default.copy(
+//            imeAction = ImeAction.Done
+//        ),
+//        keyboardActions = KeyboardActions(onDone = {
+//            onImeAction()
+//            keyboardController?.hide()
+//        }),
+//        modifier = modifier
+//    )
+    
     TextField(
-        value = TextFieldValue(text = text),
+        value = TextFieldValue(text),
         onValueChange = onTextChange,
-        colors = TextFieldDefaults.textFieldColors(
-            backgroundColor = Color.Transparent
-        ),
-        maxLine = maxLine,
-        label = NoteInputLabel(label),
-        keyboardOptions = KeyboardOptions.Default.copy(
-            imeAction = ImeAction.Done
-        ),
-        keyboardActions = KeyboardActions(onDone = {
-            onImeAction()
-            keyboardController?.hide()
-        }),
-        modifier = modifier
+        colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
+        maxLines = maxLine,
+        label = { Text(text = label) },
+        keyboardOptions = KeyboardOptions.Default.copy(imeAction = ImeAction.Done),
+        keyboardActions = KeyboardActions(
+            onDone = {
+                onImeAction()
+                keyboardController?.hide()
+            }
+        )
     )
 }
 
