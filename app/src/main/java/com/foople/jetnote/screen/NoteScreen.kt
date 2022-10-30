@@ -8,7 +8,7 @@ import androidx.compose.material.Text
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Notifications
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -20,6 +20,9 @@ import com.foople.jetnote.components.NoteInputText
 
 @Composable
 fun NoteScreen() {
+    var title by remember { mutableStateOf("") }
+    var description by remember { mutableStateOf("") }
+
     Column(modifier = Modifier.padding(6.dp)) {
         TopAppBar(
             title = { Text(text = stringResource(id = R.string.app_name)) },
@@ -33,7 +36,8 @@ fun NoteScreen() {
             modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            NoteInputText(text = "Hello", label = "Hello Label", onTextChange = {})
+            NoteInputText(text = title, label = "Title", onTextChange = {})
+            NoteInputText(text = description, label = "Add a note", onTextChange = {})
         }
     }
 }
