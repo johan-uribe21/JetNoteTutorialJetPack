@@ -6,12 +6,12 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
-import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.foople.jetnote.model.Note
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.foople.jetnote.screen.NoteScreen
+import com.foople.jetnote.screen.NoteViewModel
 import com.foople.jetnote.ui.theme.JetNoteTheme
 
 class MainActivity : ComponentActivity() {
@@ -24,18 +24,28 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    NoteScreen(notes = mutableListOf<Note>())
+                    NotesApp()
                 }
             }
         }
     }
 }
 
+@Composable
+fun NotesApp(noteViewModel: NoteViewModel = viewModel()) {
+    val notesList = noteViewModel.getAllNotes()
+
+    NoteScreen(
+        notes = notesList,
+        onAddNote = { noteViewModel.addNote(it) },
+        onRemoveNote = { noteViewModel.removeNote(it) },
+    )
+}
 
 @Preview(showBackground = true)
 @Composable
 fun DefaultPreview() {
     JetNoteTheme {
-
+        NotesApp()
     }
 }
