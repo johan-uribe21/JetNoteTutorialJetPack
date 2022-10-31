@@ -1,7 +1,9 @@
 package com.foople.jetnote.components
 
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material.Button
 import androidx.compose.material.Text
 import androidx.compose.material.TextField
 import androidx.compose.material.TextFieldDefaults
@@ -20,13 +22,13 @@ fun NoteInputText(
     text: String,
     label: String,
     maxLine: Int = 1,
-    onTextChange: (TextFieldValue) -> Unit,
+    onTextChange: (String) -> Unit,
     onImeAction: () -> Unit = {}
 ) {
     val keyboardController = LocalSoftwareKeyboardController.current
     
     TextField(
-        value = TextFieldValue(text),
+        value = text,
         onValueChange = onTextChange,
         colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent),
         maxLines = maxLine,
@@ -45,4 +47,21 @@ fun NoteInputText(
 @Composable
 fun NoteInputLabel(label: String): Unit {
     Text(text = label)
+}
+
+@Composable
+fun NoteButton(
+    modifier: Modifier = Modifier,
+    text: String,
+    onClick: () -> Unit,
+    enabled: Boolean = true,
+) {
+    Button(
+        onClick = onClick,
+        shape = CircleShape,
+        enabled = enabled,
+        modifier = modifier,
+    ) {
+        Text(text)
+    }
 }

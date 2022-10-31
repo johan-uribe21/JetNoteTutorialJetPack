@@ -16,10 +16,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.foople.jetnote.R
+import com.foople.jetnote.components.NoteButton
 import com.foople.jetnote.components.NoteInputText
+import com.foople.jetnote.model.Note
 
 @Composable
-fun NoteScreen() {
+fun NoteScreen(
+    notes: List<Note>
+) {
     var title by remember { mutableStateOf("") }
     var description by remember { mutableStateOf("") }
 
@@ -34,10 +38,40 @@ fun NoteScreen() {
 
         Column(
             modifier = Modifier.fillMaxWidth(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
-            NoteInputText(text = title, label = "Title", onTextChange = {})
-            NoteInputText(text = description, label = "Add a note", onTextChange = {})
+            NoteInputText(
+                modifier = Modifier.padding(
+                    top = 9.dp,
+                    bottom = 9.dp,
+                ),
+                text = title,
+                label = "Title",
+                onTextChange = {
+                    if (it.all { e -> e.isLetter() || e.isWhitespace() }) title = it
+                }
+            )
+            NoteInputText(
+                modifier = Modifier.padding(
+                    top = 9.dp,
+                    bottom = 9.dp,
+                ),
+                text = description,
+                label = "Add a note",
+                onTextChange = {
+                    if (it.all { e -> e.isLetter() || e.isWhitespace() }) description = it
+                }
+            )
+            NoteButton(
+                text = "Save",
+                onClick = {
+                    if (title.isNotEmpty() && description.isNotEmpty()) {
+                        title = ""
+                        description = ""
+
+                    }
+                }
+            )
         }
     }
 }
@@ -45,5 +79,5 @@ fun NoteScreen() {
 @Preview(showBackground = true)
 @Composable
 fun NotesScreenPreview() {
-    NoteScreen()
+    NoteScreen(notes = mutableListOf<Note>())
 }
